@@ -1,0 +1,31 @@
+{
+    "name": "ibilalkhilji/secure-laravel",
+    "type": "library",
+    "version": "1.0.0",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Ibilalkhilji\\SecureLaravel\\": "src/"
+        },
+        "files": [
+            "src/Helpers/helpers.php"
+        ]
+    },
+    "authors": [
+        {
+            "name": "ibilalkhilji",
+            "email": "kbinfo4u@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Ibilalkhilji\\SecureLaravel\\SecurityServiceProvider"
+            ]
+        }
+    },
+    "require": {
+        "ext-curl": "*"
+    }
+}
