@@ -1,11 +1,13 @@
 # 🔒 SecureLaravel
+
 ![Secure Laravel](banner.png)
 ![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/ibilalkhilji/secure-laravel)
 ![GitHub Tag](https://img.shields.io/github/v/tag/ibilalkhilji/secure-laravel?label=version)
 ![GitHub contributors](https://img.shields.io/github/contributors/ibilalkhilji/secure-laravel)
 ![GitHub Repo stars](https://img.shields.io/github/stars/ibilalkhilji/secure-laravel)
 
-A lightweight Laravel security enhancement package by **Bilal Khilji** — designed to add advanced licensing, authorization, and integrity protection layers to your Laravel applications.
+A lightweight Laravel security enhancement package by **Bilal Khilji** — designed to add advanced licensing,
+authorization, and integrity protection layers to your Laravel applications.
 
 ---
 
@@ -87,7 +89,7 @@ SecureLaravel::track([
 ## 🧪 Helper Functions
 
 | Function                | Description                      |
-| ----------------------- | -------------------------------- |
+|-------------------------|----------------------------------|
 | `secure_check()`        | Validates if the app is licensed |
 | `secure_fingerprint()`  | Returns system fingerprint       |
 | `secure_encrypt($data)` | Encrypts data with package key   |
@@ -121,7 +123,7 @@ Route::middleware(['secure.license'])->group(function () {
 
 ---
 
-## 🧑‍💻 Author
+## 👨🏻‍💻 Author
 
 **Bilal Khilji**
 📧 [kbinfo4u@gmail.com](mailto:kbinfo4u@gmail.com)
@@ -137,6 +139,7 @@ This package is open-sourced software licensed under the [MIT license](LICENSE).
 
 ## 💡 Notes
 
-If you’re building a SaaS or distributed Laravel product, this package is ideal for embedding robust licensing and usage validation directly into your codebase.
+If you’re building a SaaS or distributed Laravel product, this package is ideal for embedding robust licensing and usage
+validation directly into your codebase.
 
 ---
