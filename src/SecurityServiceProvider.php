@@ -4,12 +4,21 @@ namespace Ibilalkhilji\SecureLaravel;
 
 use Ibilalkhilji\SecureLaravel\Console\Commands\ActivateLicenseCommand;
 use Ibilalkhilji\SecureLaravel\Http\Middleware\PassportChecker;
+use Illuminate\Foundation\Console\AboutCommand;
 use Illuminate\Support\ServiceProvider;
 
 class SecurityServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
+        AboutCommand::add('Secure Laravel', fn() => [
+            'Version' => '1.0.0',
+            'Developed by' => 'KHALEEJ Infotech',
+            'Developer Email' => 'contact@khaleejinfotech.com',
+            'Developer Website' => 'https://khaleejinfotech.com',
+            'Author' => 'Bilal Khilji',
+        ]);
+
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'secure');
         $this->loadRoutesFrom(__DIR__.'/../routes/web.php');

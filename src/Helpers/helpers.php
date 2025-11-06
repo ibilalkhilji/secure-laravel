@@ -1,5 +1,5 @@
 <?php
-const BASE_URL = 'https://secure.khaleejinfotech.com/distribution/api/passport';
+const BASE_URL = 'https://passport.khaleejinfotech.com/api/passport';
 
 if (!function_exists('secure_hash_mac')) {
     function secure_hash_mac(string $mac): string
