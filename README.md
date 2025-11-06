@@ -1,25 +1,24 @@
 # 🔒 SecureLaravel
-
 ![Secure Laravel](banner.png)
 ![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/ibilalkhilji/secure-laravel)
 ![GitHub Tag](https://img.shields.io/github/v/tag/ibilalkhilji/secure-laravel?label=version)
 ![GitHub contributors](https://img.shields.io/github/contributors/ibilalkhilji/secure-laravel)
 ![GitHub Repo stars](https://img.shields.io/github/stars/ibilalkhilji/secure-laravel)
 
-A lightweight Laravel security enhancement package by **Bilal Khilji** — designed to add advanced licensing,
-authorization, and integrity protection layers to your Laravel applications.
+A lightweight Laravel security enhancement package by **Bilal Khilji** — designed to add advanced licensing, authorization, and integrity protection layers to your Laravel applications.
 
 ---
 
 ## 🚀 Features
 
 * 🧩 Plug-and-play **Laravel Service Provider**
-* 🦪 **License validation and encryption**
-* 🔥 **Machine fingerprinting** support
+* 🪪 **License validation and encryption**
+* 🖥️ **Machine fingerprinting** support
 * 🌐 **IP, domain, and usage tracking**
 * 🧱 **Pre-boot protection** for unauthorized copies
 * ⚙️ Helper functions for secure key management
-* 🦦 Zero configuration — autoloaded via Composer
+* 🪶 Zero configuration — autoloaded via Composer
+* 🧩 **Dynamic patch injection** for `Application.php` and `index.php`
 
 ---
 
@@ -31,25 +30,51 @@ Require the package via Composer:
 composer require ibilalkhilji/secure-laravel
 ```
 
+Then run the migrations (**this step is required**):
+
+```bash
+php artisan migrate
+```
+
+This will create the necessary database tables for license management and usage tracking.
+
 ---
 
 ## ⚙️ Configuration
 
-After installation, the service provider is automatically registered.
+No manual configuration or file export is required. The package auto-registers its service provider and uses sensible defaults for most environments.
 
-If you want to publish the configuration file:
+You can, however, override behavior directly through environment variables or by extending the default classes under `src/`.
 
-```bash
-php artisan vendor:publish --provider="Ibilalkhilji\SecureLaravel\SecurityServiceProvider" --tag="config"
+Example:
+
+```env
+SECURE_LARAVEL_ENDPOINT=https://your-license-server.com
 ```
 
-This will create a configuration file at:
+---
+
+## 🧩 Dynamic Patch Injection
+
+SecureLaravel allows you to dynamically patch your Laravel core files — like `Application.php` and `index.php` — without modifying them manually.
+
+Simply place your patch files inside the **`Patches`** folder located at the Laravel base path:
 
 ```
-config/secure-laravel.php
+/basepath/Patches/
+    ├── Application.php
+    └── index.php
 ```
 
-Here, you can customize license verification endpoints, encryption settings, and key file paths.
+At runtime, the package automatically detects and injects these patch files, ensuring seamless updates and rollback safety.
+
+This is particularly useful for:
+
+* Injecting licensing validation before Laravel boot
+* Enforcing pre-startup checks for unauthorized copies
+* Extending bootstrap logic securely
+
+**Fallback behavior:** If no dynamic patch files are provided in the `Patches` folder, SecureLaravel will fall back to its built-in default implementations (no changes to your core files).
 
 ---
 
@@ -60,7 +85,7 @@ Here, you can customize license verification endpoints, encryption settings, and
 You can register or verify your license key using the helper:
 
 ```php
-use Ibilalkhilji\SecureLaravel\Facades\SecureLaravel;
+use Ibilalkhilji\\SecureLaravel\\Facades\\SecureLaravel;
 
 SecureLaravel::validateLicense('YOUR-LICENSE-KEY');
 ```
@@ -86,7 +111,7 @@ SecureLaravel::track([
 
 ---
 
-## 🧪 Helper Functions
+## 🧰 Helper Functions
 
 | Function                | Description                      |
 |-------------------------|----------------------------------|
@@ -97,7 +122,7 @@ SecureLaravel::track([
 
 ---
 
-## 🧙‍♂️ Folder Structure
+## 🧩 Folder Structure
 
 ```
 src/
@@ -123,7 +148,7 @@ Route::middleware(['secure.license'])->group(function () {
 
 ---
 
-## 👨🏻‍💻 Author
+## ‍💻 Author
 
 **Bilal Khilji**
 📧 [kbinfo4u@gmail.com](mailto:kbinfo4u@gmail.com)
@@ -139,7 +164,10 @@ This package is open-sourced software licensed under the [MIT license](LICENSE).
 
 ## 💡 Notes
 
-If you’re building a SaaS or distributed Laravel product, this package is ideal for embedding robust licensing and usage
-validation directly into your codebase.
+If you’re building a SaaS or distributed Laravel product, this package is ideal for embedding robust licensing and usage validation directly into your codebase.
 
 ---
+
+### 🧱 Version
+
+**v1.0.4**
