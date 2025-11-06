@@ -10,8 +10,6 @@ class Passport extends Model
 
     protected function casts(): array
     {
-        return [
-            'expires_at' => 'datetime',
-        ];
+        return ['expires_at' => 'datetime',];
     }
 }
