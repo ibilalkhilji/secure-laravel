@@ -8,6 +8,28 @@ if (!function_exists('secure_hash_mac')) {
     }
 }
 
+if (!function_exists('hwid')) {
+    function hwid(): array
+    {
+        $info = trim(exec('getmac')) ?? '';
+
+        $mac = '';
+        if (preg_match('/^([0-9A-Fa-f-]+)\s+\\\\Device\\\\Tcpip_{([A-F0-9\-]+)}/', $info, $matches)) {
+            $mac = $matches[1] ?? '';
+        }
+
+        $guid = '';
+        if (preg_match('/^([0-9A-Fa-f-]+)\s+\\\\Device\\\\Tcpip_{([A-F0-9\-]+)}/', $info, $matches)) {
+            $guid = $matches[2] ?? '';
+        }
+
+        return [
+            'mac' => $mac,
+            'guid' => $guid,
+        ];
+    }
+}
+
 if (!function_exists('mac')) {
     function mac(): string
     {
@@ -35,11 +57,12 @@ if (!function_exists('guid')) {
 if (!function_exists('system_fingerprint')) {
     function system_fingerprint(): array
     {
+        $hwid = hwid();
         return [
             'domain' => gethostname(),
-            'mac' => mac(),
-            'guid' => guid(),
-            'hash' => secure_hash_mac(mac()),
+            'mac' => $hwid['mac'],
+            'guid' => $hwid['guid'],
+            'hash' => secure_hash_mac($hwid['mac']),
         ];
     }
 }

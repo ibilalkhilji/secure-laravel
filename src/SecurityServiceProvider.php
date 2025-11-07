@@ -2,17 +2,21 @@
 
 namespace Ibilalkhilji\SecureLaravel;
 
+use Artisan;
 use Ibilalkhilji\SecureLaravel\Console\Commands\ActivateLicenseCommand;
 use Ibilalkhilji\SecureLaravel\Http\Middleware\PassportChecker;
 use Illuminate\Foundation\Console\AboutCommand;
 use Illuminate\Support\ServiceProvider;
+use Log;
+use Schema;
+use Throwable;
 
 class SecurityServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
         AboutCommand::add('Secure Laravel', fn() => [
-            'Version' => '1.0.0',
+            'Version' => '1.0.6',
             'Developed by' => 'KHALEEJ Infotech',
             'Developer Email' => 'contact@khaleejinfotech.com',
             'Developer Website' => 'https://khaleejinfotech.com',
@@ -21,7 +25,20 @@ class SecurityServiceProvider extends ServiceProvider
 
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'secure');
-        $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
+        $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
+
+        try {
+            if (!Schema::hasTable('passports')) {
+                Artisan::call('migrate', [
+                    '--path' => realpath(__DIR__ . '/../database/migrations'),
+                    '--force' => true,
+                ]);
+
+                Log::info('[SecureLaravel] Package migrations executed automatically.');
+            }
+        } catch (Throwable $e) {
+            Log::warning('[SecureLaravel] Auto-migration failed: ' . $e->getMessage());
+        }
 
         if ($this->app->runningInConsole()) {
             $this->commands([

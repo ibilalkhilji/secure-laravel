@@ -18,14 +18,15 @@ class PassportValidator
     {
         $path = license_file_path();
         if (!file_exists($path)) return false;
-        $mac = str_replace('-', '', mac());
+        $hwid = hwid();
+        $mac = str_replace('-', '', $hwid['mac']);
 
         if (!file_exists("C:\\ProgramData\\" . $mac)) return false;
 
         try {
             $data = Crypt::decrypt(file_get_contents($path));
             if ($data['domain'] !== gethostname()) return false;
-            if ($data['guid'] !== guid()) return false;
+            if ($data['guid'] !== $hwid['guid']) return false;
             if (Carbon::now()->gt(Carbon::parse($data['expires_at']))) return false;
 
             return true;
@@ -39,14 +40,15 @@ class PassportValidator
      */
     public static function createLicense(string $license): RedirectResponse|bool
     {
+        $hwid = hwid();
         $serverData = request()->server();
         $response = Http::withoutVerifying()
             ->post(BASE_URL, [
                 'app_name' => config('app.name'),
                 'app_ver' => App::version() ?? 0,
                 'license' => $license,
-                'mac' => mac(),
-                'guid' => guid(),
+                'mac' => $hwid['mac'],
+                'guid' => $hwid['guid'],
                 'install_location' => App::basePath(),
                 'fingerprint' => request()->fingerprint(),
 
