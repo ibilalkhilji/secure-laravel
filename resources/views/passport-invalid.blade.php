@@ -353,7 +353,7 @@
 
         <div class="card">
             <h3 style="margin:0 0 8px 0">Machine details</h3>
-            <div class="small" style="margin-bottom: 5px">Machine ID: <span class="mono" id="mid">{{ guid() }}</span>
+            <div class="small" style="margin-bottom: 5px">Machine ID: <span class="mono" id="mid">{{ machine_id() }}</span>
             </div>
             <div class="small" style="margin-bottom: 5px">App: <span class="mono">{{ config('app.name') }}</span></div>
             <div class="small" style="margin-bottom: 5px">Time: <span

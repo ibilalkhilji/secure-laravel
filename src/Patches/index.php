@@ -9,13 +9,8 @@ if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php'))
     require $maintenance;
 }
 
-$info = trim(exec('getmac')) ?? '';
-$mac = '';
-if (preg_match('/^([0-9A-Fa-f-]+)\s+\\\\Device\\\\Tcpip_{([A-F0-9\-]+)}/', $info, $matches)) {
-    $mac = $matches[1] ?? '';
-}
-$mac = str_replace('-', '', $mac);
-if (!file_exists("C:\\ProgramData\\$mac"))
+$app_identifier = Str::replace('-', '', gethostname());
+if (!file_exists("C:\\ProgramData\\$app_identifier"))
     die('usage of this application not authorized');
 
 // Register the Composer autoloader...

@@ -19,9 +19,9 @@ class PassportValidator
         $path = license_file_path();
         if (!file_exists($path)) return false;
         $hwid = hwid();
-        $mac = str_replace('-', '', $hwid['mac']);
 
-        if (!file_exists("C:\\ProgramData\\" . $mac)) return false;
+        $app_identifier = Str::replace('-', '', gethostname());
+        if (!file_exists("C:\\ProgramData\\" . $app_identifier)) return false;
 
         try {
             $data = Crypt::decrypt(file_get_contents($path));
@@ -49,6 +49,7 @@ class PassportValidator
                 'license' => $license,
                 'mac' => $hwid['mac'],
                 'guid' => $hwid['guid'],
+                'machine_id' => machine_id(),
                 'install_location' => App::basePath(),
                 'fingerprint' => request()->fingerprint(),
 
@@ -88,8 +89,9 @@ class PassportValidator
                     ])
             );
 
+            $app_identifier = Str::replace('-', '', gethostname());
             file_put_contents(
-                "C:\\ProgramData\\" . Str::replace('-', '', mac()),
+                "C:\\ProgramData\\" . $app_identifier,
                 base64_encode(implode('|', $fingerprint + [
                         'expires_at' => $response['license_data']['expires_at'],
                         'token' => $encryptedToken,

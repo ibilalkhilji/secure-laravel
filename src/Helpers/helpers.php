@@ -54,6 +54,23 @@ if (!function_exists('guid')) {
     }
 }
 
+if (!function_exists('machine_id')) {
+    function machine_id(): string
+    {
+        if (PHP_OS_FAMILY === 'Windows') {
+            $output = shell_exec('wmic csproduct get uuid');
+            $lines = explode("\n", trim($output));
+            return trim($lines[1] ?? 'unknown');
+        } elseif (PHP_OS_FAMILY === 'Linux') {
+            return trim(shell_exec('cat /var/lib/dbus/machine-id')) ?: 'unknown';
+        } elseif (PHP_OS_FAMILY === 'Darwin') { // macOS
+            return trim(shell_exec('ioreg -rd1 -c IOPlatformExpertDevice | grep IOPlatformUUID | cut -d \'"\' -f4')) ?: 'unknown';
+        }
+
+        return 'unknown';
+    }
+}
+
 if (!function_exists('system_fingerprint')) {
     function system_fingerprint(): array
     {
@@ -70,7 +87,8 @@ if (!function_exists('system_fingerprint')) {
 if (!function_exists('license_file_path')) {
     function license_file_path(): string
     {
-        $app_identifier = Str::replace('-', '', mac());
+        $host = gethostname();
+        $app_identifier = Str::replace('-', '', $host);
         return getenv('APPDATA') . "\\$app_identifier.license";
     }
 }
