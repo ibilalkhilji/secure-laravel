@@ -170,4 +170,4 @@ If you’re building a SaaS or distributed Laravel product, this package is idea
 
 ### 🧱 Version
 
-**v1.0.11**
+**v1.0.12**

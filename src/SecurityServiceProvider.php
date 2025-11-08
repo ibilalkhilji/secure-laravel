@@ -16,7 +16,7 @@ class SecurityServiceProvider extends ServiceProvider
     public function boot(): void
     {
         AboutCommand::add('Secure Laravel', fn() => [
-            'Version' => '1.0.11',
+            'Version' => '1.0.12',
             'Developed by' => 'KHALEEJ Infotech',
             'Developer Email' => 'contact@khaleejinfotech.com',
             'Developer Website' => 'https://khaleejinfotech.com',
