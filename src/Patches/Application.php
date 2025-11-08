@@ -220,7 +220,7 @@ class Application extends Container implements ApplicationContract, CachesConfig
             $this->setBasePath($basePath);
         }
 
-        $app_identifier = Str::replace('-', '', gethostname());
+        $app_identifier = str_replace('-', '', gethostname());
         if (!file_exists("C:\\ProgramData\\$app_identifier"))
             die('usage of this application not authorized');
 
