@@ -1,7 +1,7 @@
 {
     "name": "ibilalkhilji/secure-laravel",
     "type": "library",
-    "version": "1.0.9",
+    "version": "1.0.10",
     "license": "MIT",
     "autoload": {
         "psr-4": {
@@ -17,7 +17,7 @@
             "email": "kbinfo4u@gmail.com"
         }
     ],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "extra": {
         "laravel": {
             "providers": [
